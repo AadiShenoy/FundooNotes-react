@@ -2,30 +2,33 @@ import React, { useState } from "react";
 import registerImage from "../assets/account.svg";
 import RainbowText from "react-rainbow-text";
 import { Link } from "react-router-dom";
+import userService from "../service/userService";
 import {
   validPassword,
   validEmail,
   validFirstName,
   validLastName,
-} from "./formValidation";
+} from "../config/formValidation";
 import {
   Grid,
   TextField,
   Typography,
-  InputAdornment,
   Button,
   Paper,
   FormControlLabel,
   Checkbox,
 } from "@mui/material";
-import "../styles/registeration.scss";
+import "../styles/form.scss";
 
 const Registeration = () => {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const initialUserState = {
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  };
+  const [user, setUser] = useState(initialUserState);
   const [firstNameError, setFirstNameError] = useState(false);
   const [lastNameError, setLastNameError] = useState(false);
   const [emailError, setEmailError] = useState(false);
@@ -37,19 +40,59 @@ const Registeration = () => {
     setShowPassword(!showPassword);
   };
 
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setUser({ ...user, [name]: value });
+  };
+
   const handleSubmit = (e) => {
+    let errorFlag = false;
     e.preventDefault();
     setFirstNameError(false);
     setLastNameError(false);
     setEmailError(false);
     setPasswordError(false);
     setPasswordConfirmError(false);
-    if (!validFirstName.test(firstName)) setFirstNameError(true);
-    if (!validLastName.test(lastName)) setLastNameError(true);
-    if (!validEmail.test(email)) setEmailError(true);
-    if (!validPassword.test(password)) setPasswordError(true);
-    if (password !== confirmPassword) {
+    if (!validFirstName.test(user.firstName)) {
+      errorFlag = true;
+      setFirstNameError(true);
+    }
+    if (!validLastName.test(user.lastName)) {
+      errorFlag = true;
+      setLastNameError(true);
+    }
+    if (!validEmail.test(user.email)) {
+      errorFlag = true;
+      setEmailError(true);
+    }
+    if (!validPassword.test(user.password)) {
+      errorFlag = true;
+      setPasswordError(true);
+    }
+    if (user.password !== user.confirmPassword) {
+      errorFlag = true;
       setPasswordConfirmError(true);
+    }
+
+    if (errorFlag) {
+      console.log("Enter the correct details");
+    } else {
+      let data = {
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        password: user.password,
+      };
+      userService
+        .register(data)
+        .then((response) => {
+          console.log("Registered successfully");
+          console.log(response.data);
+        })
+        .catch((e) => {
+          console.log("Registeration failed");
+          console.log(e);
+        });
     }
   };
 
@@ -78,7 +121,9 @@ const Registeration = () => {
                 fullWidth
                 error={firstNameError}
                 helperText={firstNameError ? "Invalid first name" : ""}
-                onChange={(e) => setFirstName(e.target.value)}
+                name="firstName"
+                value={user.firstName}
+                onChange={handleInputChange}
               />
             </Grid>
             <Grid item xs={6}>
@@ -89,7 +134,9 @@ const Registeration = () => {
                 fullWidth
                 error={lastNameError}
                 helperText={lastNameError ? "Invalid last name" : ""}
-                onChange={(e) => setLastName(e.target.value)}
+                name="lastName"
+                value={user.lastName}
+                onChange={handleInputChange}
               />
             </Grid>
             <Grid item xs={12}>
@@ -101,15 +148,12 @@ const Registeration = () => {
                 helperText={
                   emailError
                     ? "Invalid email"
-                    : "You can use letters,numbers & periods"
+                    : "You can use letters,numbers & periods eg:name@gmail.com"
                 }
                 fullWidth
-                onChange={(e) => setEmail(e.target.value)}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">@gmail.com</InputAdornment>
-                  ),
-                }}
+                name="email"
+                value={user.email}
+                onChange={handleInputChange}
               />
             </Grid>
             <Grid item xs={6}>
@@ -119,7 +163,9 @@ const Registeration = () => {
                 variant="outlined"
                 fullWidth
                 type={showPassword ? "text" : "password"}
-                onChange={(e) => setPassword(e.target.value)}
+                name="password"
+                value={user.password}
+                onChange={handleInputChange}
                 error={passwordError}
                 helperText={
                   passwordError
@@ -135,7 +181,9 @@ const Registeration = () => {
                 variant="outlined"
                 fullWidth
                 type={showPassword ? "text" : "password"}
-                onChange={(e) => setConfirmPassword(e.target.value)}
+                name="confirmPassword"
+                value={user.confirmPassword}
+                onChange={handleInputChange}
                 error={confirmPasswordError}
                 helperText={confirmPasswordError ? "Password doesnt match" : ""}
               />
@@ -148,7 +196,7 @@ const Registeration = () => {
               />
             </Grid>
             <Grid item xs={6} align="left">
-              <Button id="sign-in-button" component={Link} to="/login">
+              <Button id="sign-in-btn" component={Link} to="/login">
                 Sign in instead
               </Button>
             </Grid>
