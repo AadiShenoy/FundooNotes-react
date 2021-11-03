@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import registerImage from "../assets/account.svg";
-import RainbowText from "react-rainbow-text";
-import { Link } from "react-router-dom";
+import { Link,Redirect } from "react-router-dom";
 import userService from "../service/userService";
+
 import {
   validPassword,
   validEmail,
@@ -35,6 +35,7 @@ const Registeration = () => {
   const [passwordError, setPasswordError] = useState(false);
   const [confirmPasswordError, setPasswordConfirmError] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [success,setSuccess] = useState(false)
 
   const handleShowPassword = () => {
     setShowPassword(!showPassword);
@@ -86,8 +87,14 @@ const Registeration = () => {
       userService
         .register(data)
         .then((response) => {
-          console.log("Registered successfully");
-          console.log(response.data);
+          if(response.data.status === 200){
+            setSuccess(true)
+            console.log("Registered successfully");
+            console.log(response.data);
+          }else{
+            console.log("Registeration failed");
+            console.log(response.data);
+          }
         })
         .catch((e) => {
           console.log("Registeration failed");
@@ -98,14 +105,13 @@ const Registeration = () => {
 
   return (
     <form id="registeration-form" onSubmit={handleSubmit} autoComplete="off">
+      {/* <h4>{process.env.NODE_ENV}</h4> */}
       <Paper elevation={5} sx={{ p: 2 }}>
         <Grid container>
           <Grid item container spacing={1} xs={8}>
             <Grid item xs={12}>
-              <Typography variant="h4" align="left">
-                <RainbowText lightness={0.5} saturation={1}>
-                  Fundoo Note
-                </RainbowText>
+              <Typography variant="h5" align="left">
+              <span className="multicolortext">Fundoo Note</span>
               </Typography>
             </Grid>
             <Grid item xs={12}>
@@ -211,6 +217,7 @@ const Registeration = () => {
           </Grid>
         </Grid>
       </Paper>
+      {success?<Redirect to="/login" />:null}
     </form>
   );
 };

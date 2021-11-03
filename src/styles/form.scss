@@ -1,13 +1,32 @@
-#link-btn,#sign-in-btn{
-    text-transform:none;
-    font-weight:bold;
+#link-btn,
+#sign-in-btn {
+  text-transform: none;
+  font-weight: bold;
 }
 
-#login-form,#registeration-form{
-    width: 40%;
-    margin: 2% auto;
+#login-form,
+#registeration-form,
+#resetpassword-form,
+#forgotpassword-form {
+  width: 40%;
+  margin: 2% auto;
 }
-#registeration-form{
-    width: 50%;
+#registeration-form {
+  width: 50%;
 }
-
+.multicolortext {
+  background-image: linear-gradient(
+    to left,
+    red,
+    green,
+    blue,
+    orange,
+    red,
+    blue
+  );
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-weight: bold;
+}

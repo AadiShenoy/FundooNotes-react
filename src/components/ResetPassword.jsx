@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import userService from "../service/userService";
 import {
   Grid,
@@ -7,55 +7,52 @@ import {
   Typography,
   Button,
   Paper,
-  Checkbox,
   FormControlLabel,
+  Checkbox,
 } from "@mui/material";
 import "../styles/form.scss";
-const Login = () => {
-  const [email, setEmail] = useState("");
+const ResetPassWord = () => {
   const [password, setPassword] = useState("");
-  const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const { token } = useParams();
+
+  const handleShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
 
   const handleSubmit = (e) => {
     let errorFlag = false;
     e.preventDefault();
-    setEmailError(false);
     setPasswordError(false);
-    if (email === "") {
-      errorFlag = true;
-      setEmailError(true);
-    }
     if (password === "") {
       errorFlag = true;
       setPasswordError(true);
     }
-
     if (errorFlag) {
-      console.log("Login Error");
+      console.log("Error");
     } else {
       let data = {
-        email: email,
         password: password,
       };
       userService
-        .login(data)
-        .then((response) => {
-          console.log(response.data);
+        .resetPassword(data, token)
+        .then((result) => {
+          if (result.data.status === 200) {
+            console.log(result.data);
+            alert("password changed");
+          } else {
+            console.log(result.data);
+          }
         })
         .catch((e) => {
           console.log(e);
         });
     }
   };
-  const handleShowPassword = () => {
-    setShowPassword(!showPassword);
-  };
-
   return (
-    <form id="login-form" onSubmit={handleSubmit} autoComplete="off">
-      <Paper elevation={5} sx={{ p: 4 }}>
+    <form id="resetpassword-form" autoComplete="off" onSubmit={handleSubmit}>
+      <Paper elevation={5} sx={{ p: 4, height: "70vh" }}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <Typography variant="h5">
@@ -63,33 +60,23 @@ const Login = () => {
             </Typography>
           </Grid>
           <Grid item xs={12}>
-            <Typography variant="h5">Sign in</Typography>
+            <Typography variant="h5">
+              Reset your Fundoo Note password
+            </Typography>
           </Grid>
           <Grid item xs={12}>
-            <Typography variant="p">to continue to Fundoo Notes</Typography>
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              id="email"
-              label="Email eg:name@gmail.com"
-              variant="outlined"
-              type="email"
-              error={emailError}
-              helperText={emailError ? "Email cannot be empty" : ""}
-              fullWidth
-              onChange={(e) => setEmail(e.target.value)}
-            />
+            <Typography variant="p">Enter new Fundoo Note password</Typography>
           </Grid>
           <Grid item xs={12}>
             <TextField
               id="password"
-              label="password"
-              type={showPassword ? "text" : "password"}
+              label="Password"
               variant="outlined"
-              fullWidth
-              onChange={(e) => setPassword(e.target.value)}
+              type={showPassword ? "text" : "password"}
               error={passwordError}
               helperText={passwordError ? "Password cannot be empty" : ""}
+              fullWidth
+              onChange={(e) => setPassword(e.target.value)}
             />
           </Grid>
           <Grid item xs={12} align="left">
@@ -100,18 +87,13 @@ const Login = () => {
             />
           </Grid>
           <Grid item xs={6} align="left">
-            <Button id="link-btn" component={Link} to="/forgot">
-              Forgot password
+            <Button variant="contained" component={Link} to="/login">
+              sign in
             </Button>
           </Grid>
           <Grid item xs={6} align="right">
             <Button variant="contained" type="submit">
               Submit
-            </Button>
-          </Grid>
-          <Grid item xs={6} align="left">
-            <Button id="link-btn" component={Link} to="/">
-              Create account
             </Button>
           </Grid>
         </Grid>
@@ -120,4 +102,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default ResetPassWord;
