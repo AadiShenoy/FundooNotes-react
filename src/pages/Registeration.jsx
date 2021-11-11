@@ -217,7 +217,7 @@ const Registeration = () => {
           </Grid>
         </Grid>
       </Paper>
-      {success?<Redirect to="/login" />:null}
+      {success?<Redirect to="/login"/>:null}
     </form>
   );
 };

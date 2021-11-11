@@ -9,5 +9,14 @@ const post = (requestObject) => {
   });
 };
 
+
+const get = (requestObject) => {
+  return axios({
+    method: requestObject.method,
+    url: requestObject.url,
+    headers: requestObject.headers
+  });
+};
+
 /* eslint import/no-anonymous-default-export: [2, {"allowObject": true}] */
-export default { post };
+export default { post,get };

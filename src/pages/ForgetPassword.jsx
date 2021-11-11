@@ -24,8 +24,13 @@ const ForgetPassWord = () => {
       userService
         .forgetPassword(data)
         .then((result) => {
-          console.log("Email sent successfully");
-          alert("Email has been sent to reset the password");
+          if (result.data.status === 200) {
+            console.log("Email sent successfully");
+            alert("Email has been sent to reset the password");
+          } else {
+            alert("Invalid email");
+            console.log(result.data)
+          }
         })
         .catch((e) => {
           console.log(e);

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link,Redirect } from "react-router-dom";
 import userService from "../service/userService";
 import {
   Grid,
@@ -17,6 +17,7 @@ const Login = () => {
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [success,setSuccess] = useState(false)
 
   const handleSubmit = (e) => {
     let errorFlag = false;
@@ -42,7 +43,14 @@ const Login = () => {
       userService
         .login(data)
         .then((response) => {
-          console.log(response.data);
+          if(response.data.status === 200){
+            setSuccess(true)
+            localStorage.setItem('token',response.data.message.token)
+            console.log("Login successfully");
+          }else{
+            console.log("Login failed");
+            console.log(response.data);
+          }
         })
         .catch((e) => {
           console.log(e);
@@ -116,6 +124,7 @@ const Login = () => {
           </Grid>
         </Grid>
       </Paper>
+      {success?<Redirect to="/dashboard"/>:null}
     </form>
   );
 };
