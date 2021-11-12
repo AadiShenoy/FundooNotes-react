@@ -12,6 +12,10 @@ import MuiAppBar from "@mui/material/AppBar";
 import SearchIcon from "@mui/icons-material/Search";
 import MenuIcon from "@mui/icons-material/Menu";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
+import RefreshOutlinedIcon from "@mui/icons-material/RefreshOutlined";
+import SplitscreenOutlinedIcon from "@mui/icons-material/SplitscreenOutlined";
+import "../styles/home.scss";
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== "open",
@@ -22,41 +26,64 @@ const AppBar = styled(MuiAppBar, {
     duration: theme.transitions.duration.leavingScreen,
   }),
   spacing: 2,
+  backgroundColor: "white",
 }));
 
 const Appbar = ({ handleDrawerOpen }) => {
   return (
     <AppBar position="fixed">
-      <Toolbar>
+      <Toolbar style={{ color: "rgba(0, 0, 0, 0.54)" }}>
         <IconButton
-          color="inherit"
           aria-label="open drawer"
           onClick={handleDrawerOpen}
           edge="start"
           sx={{
-            marginRight: "36px",
+            marginRight: "30px",
           }}
         >
           <MenuIcon />
         </IconButton>
-        <img src={keepImage} alt="" style={{ width: "40px", height: "40px" }} />
-        <Typography variant="h6" noWrap component="div">
+        <img src={keepImage} alt="" style={{ width: "2em", height: "2.5em" }} />
+        <Typography
+          variant="h6"
+          noWrap
+          style={{ fontWeight: "bold", marginLeft: "10px" }}
+          component="div"
+        >
           Fundoo Note
         </Typography>
         <TextField
           placeholder="Search…"
-          style={{ width: "60%", margin: "auto" }}
+          style={{ width: "50%", margin: "auto" }}
           variant="outlined"
+          size="small"
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
-                <SearchIcon style={{ color: "white" }} />
+                <SearchIcon />
               </InputAdornment>
             ),
-            style: { color: "white" },
+            style: { height: "44px" },
           }}
         />
-        <AccountCircleIcon fontSize="large" />
+        <RefreshOutlinedIcon fontSize="medium" style={{ marginLeft: "15px" }} />
+        <SplitscreenOutlinedIcon
+          fontSize="medium"
+          style={{ marginLeft: "15px" }}
+        />
+        <SettingsOutlinedIcon
+          fontSize="medium"
+          style={{ marginLeft: "15px" }}
+        />
+        <div className="appbar-div">
+          <Typography
+            variant="h6"
+            style={{ fontWeight: "bold", marginRight: "5px" }}
+          >
+            Fundoo
+          </Typography>
+          <AccountCircleIcon fontSize="large" />
+        </div>
       </Toolbar>
     </AppBar>
   );

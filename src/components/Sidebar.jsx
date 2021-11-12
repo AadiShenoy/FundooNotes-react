@@ -1,11 +1,15 @@
 import React from "react";
 import { styled } from "@mui/material/styles";
-import { List, ListItem, Divider } from "@mui/material";
+import { List, ListItem} from "@mui/material";
 import MuiDrawer from "@mui/material/Drawer";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
+import NoteOutlinedIcon from '@mui/icons-material/NoteOutlined';
+import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNoneOutlined';
+import LightbulbOutlinedIcon from '@mui/icons-material/LightbulbOutlined';
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
+import ArchiveOutlinedIcon from '@mui/icons-material/ArchiveOutlined';
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 
 const drawerWidth = 240;
 const openedMixin = (theme) => ({
@@ -56,30 +60,47 @@ const Drawer = styled(MuiDrawer, {
 }));
 
 const Sidebar = ({ open }) => {
+
   return (
     <Drawer variant="permanent" open={open}>
       <DrawerHeader />
-      <Divider />
       <List>
-        {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
-          <ListItem button key={text}>
+          <ListItem button>
             <ListItemIcon>
-              {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+             <LightbulbOutlinedIcon/>
             </ListItemIcon>
-            <ListItemText primary={text} />
+            <ListItemText primary="Notes" />
           </ListItem>
-        ))}
-      </List>
-      <Divider />
-      <List>
-        {["All mail", "Trash", "Spam"].map((text, index) => (
-          <ListItem button key={text}>
+          <ListItem button>
             <ListItemIcon>
-              {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+             <NotificationsNoneOutlinedIcon/>
             </ListItemIcon>
-            <ListItemText primary={text} />
+            <ListItemText primary="Reminders" />
           </ListItem>
-        ))}
+          <ListItem button>
+            <ListItemIcon>
+             <NoteOutlinedIcon/>
+            </ListItemIcon>
+            <ListItemText primary="Label" />
+          </ListItem>
+          <ListItem button>
+            <ListItemIcon>
+             <EditOutlinedIcon/>
+            </ListItemIcon>
+            <ListItemText primary="Edit labels" />
+          </ListItem>
+          <ListItem button>
+            <ListItemIcon>
+             <ArchiveOutlinedIcon/>
+            </ListItemIcon>
+            <ListItemText primary="Archive" />
+          </ListItem>
+          <ListItem button>
+            <ListItemIcon>
+             <DeleteOutlineOutlinedIcon/>
+            </ListItemIcon>
+            <ListItemText primary="Trash" />
+          </ListItem>
       </List>
     </Drawer>
   );
