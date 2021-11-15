@@ -1,15 +1,15 @@
 import React from "react";
 import { styled } from "@mui/material/styles";
-import { List, ListItem} from "@mui/material";
+import { List, ListItem } from "@mui/material";
 import MuiDrawer from "@mui/material/Drawer";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import NoteOutlinedIcon from '@mui/icons-material/NoteOutlined';
-import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNoneOutlined';
-import LightbulbOutlinedIcon from '@mui/icons-material/LightbulbOutlined';
-import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
-import ArchiveOutlinedIcon from '@mui/icons-material/ArchiveOutlined';
-import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
+import NoteOutlinedIcon from "@mui/icons-material/NoteOutlined";
+import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
+import LightbulbOutlinedIcon from "@mui/icons-material/LightbulbOutlined";
+import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
+import ArchiveOutlinedIcon from "@mui/icons-material/ArchiveOutlined";
+import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 
 const drawerWidth = 240;
 const openedMixin = (theme) => ({
@@ -59,51 +59,51 @@ const Drawer = styled(MuiDrawer, {
   }),
 }));
 
-const Sidebar = ({ open }) => {
-
+const Sidebar = ({ open,handleTitle }) => {
   return (
     <Drawer variant="permanent" open={open}>
       <DrawerHeader />
       <List>
-          <ListItem button>
-            <ListItemIcon>
-             <LightbulbOutlinedIcon/>
-            </ListItemIcon>
-            <ListItemText primary="Notes" />
-          </ListItem>
-          <ListItem button>
-            <ListItemIcon>
-             <NotificationsNoneOutlinedIcon/>
-            </ListItemIcon>
-            <ListItemText primary="Reminders" />
-          </ListItem>
-          <ListItem button>
-            <ListItemIcon>
-             <NoteOutlinedIcon/>
-            </ListItemIcon>
-            <ListItemText primary="Label" />
-          </ListItem>
-          <ListItem button>
-            <ListItemIcon>
-             <EditOutlinedIcon/>
-            </ListItemIcon>
-            <ListItemText primary="Edit labels" />
-          </ListItem>
-          <ListItem button>
-            <ListItemIcon>
-             <ArchiveOutlinedIcon/>
-            </ListItemIcon>
-            <ListItemText primary="Archive" />
-          </ListItem>
-          <ListItem button>
-            <ListItemIcon>
-             <DeleteOutlineOutlinedIcon/>
-            </ListItemIcon>
-            <ListItemText primary="Trash" />
-          </ListItem>
+        <ListItem onClick={()=> handleTitle("Fundoo Note")}>
+          <ListItemIcon>
+            <LightbulbOutlinedIcon/>
+          </ListItemIcon>
+          <ListItemText primary="Notes" />
+        </ListItem>
+        <ListItem button onClick={()=> handleTitle("Reminders")}>
+          <ListItemIcon>
+            <NotificationsNoneOutlinedIcon />
+          </ListItemIcon>
+          <ListItemText primary="Reminders" />
+        </ListItem>
+        <ListItem button onClick={()=> handleTitle("Label")}>
+          <ListItemIcon>
+            <NoteOutlinedIcon />
+          </ListItemIcon>
+          <ListItemText primary="Label" />
+        </ListItem>
+        <ListItem button onClick={()=> handleTitle("Edit labels")}>
+          <ListItemIcon>
+            <EditOutlinedIcon />
+          </ListItemIcon>
+          <ListItemText primary="Edit labels" />
+        </ListItem>
+        <ListItem button onClick={()=> handleTitle("Archive")}>
+          <ListItemIcon>
+            <ArchiveOutlinedIcon />
+          </ListItemIcon>
+          <ListItemText primary="Archive" />
+        </ListItem>
+        <ListItem button onClick={()=> handleTitle("Trash")}>
+          <ListItemIcon>
+            <DeleteOutlineOutlinedIcon />
+          </ListItemIcon>
+          <ListItemText primary="Trash" />
+        </ListItem>
       </List>
     </Drawer>
   );
 };
 
 export default Sidebar;
+
