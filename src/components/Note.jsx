@@ -1,12 +1,14 @@
 import { Box, Grid, Card, CardContent, Typography } from "@mui/material";
 import React from "react";
 import "../styles/home.scss";
+import { useSelector } from "react-redux";
 
-const Note = ({ notes }) => {
+const Note = () => {
+  const myNotes = useSelector((state) => state.allNotes.filteredNotes);
   return (
     <Box className="main-container">
       <Grid container spacing={4}>
-        {notes.map((item) => {
+        {myNotes.map((item) => {
           return (
             <Grid item xs={12} sm={6} md={3} key={item._id}>
               <Card>

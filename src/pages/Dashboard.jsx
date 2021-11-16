@@ -4,17 +4,14 @@ import { Box } from "@mui/material";
 import Note from "../components/Note";
 import Appbar from "../components/Appbar";
 import Sidebar from "../components/Sidebar";
+import { useDispatch } from "react-redux";
+import { setNotes } from "../actions/noteActions";
 
 const Dashboard = () => {
   const [open, setOpen] = useState(false);
-  const [note, setNote] = useState([]);
-  const [filteredNote, setFilteredNote] = useState([]);
-  const [search, setSearch] = useState("");
   const [title,setTitle] = useState('Fundoo Note')
 
-  const handleSearch = (searchValue) => {
-    setSearch(searchValue);
-  };
+  const dispatch = useDispatch()
 
   const handleTitle = (title) => {
     setTitle(title)
@@ -28,21 +25,12 @@ const Dashboard = () => {
     noteService
       .getNotes()
       .then((res) => {
-        console.log(res);
-        setNote(res.data.message);
+         dispatch(setNotes(res.data.message))
       })
       .catch((err) => {
         console.log(err);
       });
   };
-
-  useEffect(() => {
-    setFilteredNote(
-      note.filter((item) => {
-        return item.title.toLowerCase().includes(search.toLowerCase());
-      })
-    );
-  }, [search, note]);
 
   const handleDrawerOpen = () => {
     setOpen((prevState) => {
@@ -52,10 +40,10 @@ const Dashboard = () => {
 
   return (
     <Box sx={{ display: "flex" }}>
-      <Appbar handleDrawerOpen={handleDrawerOpen} handleSearch={handleSearch} title={title}/>
-      <Sidebar open={open} handleTitle={handleTitle}/>
+      <Appbar handleDrawerOpen={handleDrawerOpen} title={title}/>
+      <Sidebar open={open} handleTitle={handleTitle} handleDrawerOpen={handleDrawerOpen}/>
       <Box component="main" sx={{ flexGrow: 1, p: 3, margin: "5% auto" }}>
-        <Note notes={filteredNote} />
+        <Note/>
       </Box>
     </Box>
   );

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { styled } from "@mui/material/styles";
 import keepImage from "../assets/google_keep.png";
 import {
@@ -16,6 +16,9 @@ import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import RefreshOutlinedIcon from "@mui/icons-material/RefreshOutlined";
 import SplitscreenOutlinedIcon from "@mui/icons-material/SplitscreenOutlined";
 import "../styles/home.scss";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { setFilteredNotes } from "../actions/noteActions";
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== "open",
@@ -29,7 +32,25 @@ const AppBar = styled(MuiAppBar, {
   backgroundColor: "white",
 }));
 
-const Appbar = ({ handleDrawerOpen,handleSearch,title}) => {
+const Appbar = ({ handleDrawerOpen, title }) => {
+  const [search, setSearch] = useState("");
+  const myNotes = useSelector((state) => state.allNotes.notes);
+  const dispatch = useDispatch();
+
+  const handleSearch = (searchValue) => {
+    setSearch(searchValue);
+  };
+
+  useEffect(() => {
+    dispatch(
+      setFilteredNotes(
+        myNotes.filter((item) => {
+          return item.title.toLowerCase().includes(search.toLowerCase());
+        })
+      )
+    );
+  }, [search, myNotes]);
+
   return (
     <AppBar position="fixed">
       <Toolbar style={{ color: "rgba(0, 0, 0, 0.54)" }}>
@@ -54,10 +75,10 @@ const Appbar = ({ handleDrawerOpen,handleSearch,title}) => {
         </Typography>
         <TextField
           placeholder="Search…"
-          style={{ width: "50%", margin: "auto" }}
+          style={{ width: "50%", margin: "auto", backgroundColor: "#F5F5F5" }}
           variant="outlined"
           size="small"
-          onChange={e => handleSearch(e.target.value)}
+          onChange={(e) => handleSearch(e.target.value)}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">

@@ -14,6 +14,7 @@ import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined
 const drawerWidth = 240;
 const openedMixin = (theme) => ({
   width: drawerWidth,
+  borderRight: "0px",
   transition: theme.transitions.create("width", {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.enteringScreen,
@@ -26,6 +27,7 @@ const closedMixin = (theme) => ({
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
   }),
+  borderRight: "0px",
   overflowX: "hidden",
   width: `calc(${theme.spacing(7)} + 1px)`,
   [theme.breakpoints.up("sm")]: {
@@ -59,42 +61,42 @@ const Drawer = styled(MuiDrawer, {
   }),
 }));
 
-const Sidebar = ({ open,handleTitle }) => {
+const Sidebar = ({ open, handleTitle }) => {
   return (
     <Drawer variant="permanent" open={open}>
       <DrawerHeader />
       <List>
-        <ListItem onClick={()=> handleTitle("Fundoo Note")}>
+        <ListItem>
           <ListItemIcon>
-            <LightbulbOutlinedIcon/>
+            <LightbulbOutlinedIcon />
           </ListItemIcon>
-          <ListItemText primary="Notes" />
+          <ListItemText primary="Notes"/>
         </ListItem>
-        <ListItem button onClick={()=> handleTitle("Reminders")}>
+        <ListItem button onClick={() => handleTitle("Reminders")}>
           <ListItemIcon>
             <NotificationsNoneOutlinedIcon />
           </ListItemIcon>
           <ListItemText primary="Reminders" />
         </ListItem>
-        <ListItem button onClick={()=> handleTitle("Label")}>
+        <ListItem button onClick={() => handleTitle("Label")}>
           <ListItemIcon>
             <NoteOutlinedIcon />
           </ListItemIcon>
           <ListItemText primary="Label" />
         </ListItem>
-        <ListItem button onClick={()=> handleTitle("Edit labels")}>
+        <ListItem button onClick={() => handleTitle("Edit labels")}>
           <ListItemIcon>
             <EditOutlinedIcon />
           </ListItemIcon>
           <ListItemText primary="Edit labels" />
         </ListItem>
-        <ListItem button onClick={()=> handleTitle("Archive")}>
+        <ListItem button onClick={() => handleTitle("Archive")}>
           <ListItemIcon>
             <ArchiveOutlinedIcon />
           </ListItemIcon>
           <ListItemText primary="Archive" />
         </ListItem>
-        <ListItem button onClick={()=> handleTitle("Trash")}>
+        <ListItem button onClick={() => handleTitle("Trash")}>
           <ListItemIcon>
             <DeleteOutlineOutlinedIcon />
           </ListItemIcon>
@@ -106,4 +108,3 @@ const Sidebar = ({ open,handleTitle }) => {
 };
 
 export default Sidebar;
-
