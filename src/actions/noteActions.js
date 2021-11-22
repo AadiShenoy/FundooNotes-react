@@ -13,3 +13,24 @@ export const setFilteredNotes = (notes) => {
     payload: notes,
   };
 };
+
+export const setTitle = (title) => {
+  return {
+    type: ActionTypes.SET_TITLE,
+    payload: title,
+  };
+};
+
+export const addNewNote = (note) => {
+  return {
+    type: ActionTypes.ADD_NEW_NOTE,
+    payload: note,
+  };
+};
+
+export const listView = (flag) => {
+  return {
+    type: ActionTypes.LIST_VIEW,
+    payload: flag,
+  };
+};

@@ -10,6 +10,8 @@ import LightbulbOutlinedIcon from "@mui/icons-material/LightbulbOutlined";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import ArchiveOutlinedIcon from "@mui/icons-material/ArchiveOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
+import { useDispatch } from "react-redux";
+import { setTitle } from "../actions/noteActions";
 
 const drawerWidth = 240;
 const openedMixin = (theme) => ({
@@ -61,47 +63,63 @@ const Drawer = styled(MuiDrawer, {
   }),
 }));
 
-const Sidebar = ({ open, handleTitle }) => {
+const ListItems = styled(ListItem)`
+  &:hover {
+    background-color: #e6e8e6;
+    border-radius:0px 25px 25px 0px
+  }
+  &:focus {
+    background-color: #f5cb90;
+    border-radius:0px 25px 25px 0px
+  }
+`;
+
+const Sidebar = ({ open }) => {
+  const dispatch = useDispatch();
+  const handleTitle = (title) => {
+    dispatch(setTitle(title));
+  };
+
   return (
     <Drawer variant="permanent" open={open}>
       <DrawerHeader />
       <List>
-        <ListItem>
+        <ListItems button onClick={() => handleTitle("Notes")}>
           <ListItemIcon>
             <LightbulbOutlinedIcon />
           </ListItemIcon>
-          <ListItemText primary="Notes"/>
-        </ListItem>
-        <ListItem button onClick={() => handleTitle("Reminders")}>
+          <ListItemText primary="Notes" />
+        </ListItems>
+        <ListItems button onClick={() => handleTitle("Reminders")}>
           <ListItemIcon>
             <NotificationsNoneOutlinedIcon />
           </ListItemIcon>
           <ListItemText primary="Reminders" />
-        </ListItem>
-        <ListItem button onClick={() => handleTitle("Label")}>
+        </ListItems>
+        <ListItems button onClick={() => handleTitle("Label")}>
           <ListItemIcon>
             <NoteOutlinedIcon />
           </ListItemIcon>
           <ListItemText primary="Label" />
-        </ListItem>
-        <ListItem button onClick={() => handleTitle("Edit labels")}>
+        </ListItems>
+        <ListItems button onClick={() => handleTitle("Edit labels")}>
           <ListItemIcon>
             <EditOutlinedIcon />
           </ListItemIcon>
           <ListItemText primary="Edit labels" />
-        </ListItem>
-        <ListItem button onClick={() => handleTitle("Archive")}>
+        </ListItems>
+        <ListItems button onClick={() => handleTitle("Archive")}>
           <ListItemIcon>
             <ArchiveOutlinedIcon />
           </ListItemIcon>
           <ListItemText primary="Archive" />
-        </ListItem>
-        <ListItem button onClick={() => handleTitle("Trash")}>
+        </ListItems>
+        <ListItems button onClick={() => handleTitle("Trash")}>
           <ListItemIcon>
             <DeleteOutlineOutlinedIcon />
           </ListItemIcon>
           <ListItemText primary="Trash" />
-        </ListItem>
+        </ListItems>
       </List>
     </Drawer>
   );

@@ -5,12 +5,14 @@ import { useSelector } from "react-redux";
 
 const Note = () => {
   const myNotes = useSelector((state) => state.allNotes.filteredNotes);
+  const listView = useSelector((state) => state.allNotes.listView)
+
   return (
     <Box className="main-container">
-      <Grid container spacing={4}>
+      <Grid container spacing={4} justifyContent={listView?"center":null}>
         {myNotes.map((item) => {
           return (
-            <Grid item xs={12} sm={6} md={3} key={item._id}>
+            <Grid item xs={12}  md={listView?8:3} key={item._id}>
               <Card>
                 <CardContent>
                   <Typography variant="h5">{item.title}</Typography>
