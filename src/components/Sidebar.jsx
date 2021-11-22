@@ -69,7 +69,7 @@ const ListItems = styled(ListItem)`
     border-radius:0px 25px 25px 0px
   }
   &:focus {
-    background-color: #f5cb90;
+    background-color: #feefc3;
     border-radius:0px 25px 25px 0px
   }
 `;

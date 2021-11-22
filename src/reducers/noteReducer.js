@@ -19,6 +19,10 @@ export const noteReducer = (state = initialState, { type, payload }) => {
       return { ...state, notes: [...state.notes, payload] };
     case ActionTypes.LIST_VIEW:
       return {...state,listView:!state.listView}
+    case ActionTypes.UPDATE_NOTE:
+      let newNote = [...state.notes];
+      newNote[payload.index] = payload.data;
+      return {...state,notes:newNote}
     default:
       return state;
   }

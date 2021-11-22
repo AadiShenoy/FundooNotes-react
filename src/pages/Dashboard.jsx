@@ -8,10 +8,11 @@ import { useDispatch } from "react-redux";
 import { setNotes } from "../actions/noteActions";
 import AddNote from "../components/AddNote";
 import "../styles/home.scss";
+import Popup from "../components/Popup";
 
 const Dashboard = () => {
   const [open, setOpen] = useState(false);
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   useEffect(() => {
     fetchitem();
@@ -21,7 +22,7 @@ const Dashboard = () => {
     noteService
       .getNotes()
       .then((res) => {
-         dispatch(setNotes(res.data.message))
+        dispatch(setNotes(res.data.message));
       })
       .catch((err) => {
         console.log(err);
@@ -33,14 +34,31 @@ const Dashboard = () => {
       return !prevState;
     });
   };
+
+  const [isOpen, setIsOpen] = useState(false);
+  const [updateData, setUpdateData] = useState({});
+  const handleUpdate = (item,index) => {
+    let data ={
+      index:index,
+      item:item
+    }
+    setUpdateData(data);
+    setIsOpen(!isOpen);
+  };
+
+  const handleClose = (item) => {
+    setIsOpen(!isOpen);
+  };
+
   return (
-    <Box sx={{ display: "flex" ,position:'fixed'}}>
+    <Box sx={{ display: "flex" }}>
       <Appbar handleDrawerOpen={handleDrawerOpen} />
       <Sidebar open={open} />
       <Box component="main" className="note-container">
-        <AddNote/>
-        <Note />
+        <AddNote />
+        <Note handleUpdate={handleUpdate} />
       </Box>
+      {isOpen && <Popup handleClose={handleClose} item={updateData} />}
     </Box>
   );
 };

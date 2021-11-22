@@ -9,12 +9,15 @@ const AddNote = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const dispatch = useDispatch();
-
+ 
   const handleAddNotes = () => {
     let data = {
       title: title,
       content: content,
     };
+    setTitle("");
+    setContent("");
+    setClick(false);
     service
       .setNotes(data)
       .then((res) => {
@@ -28,6 +31,8 @@ const AddNote = () => {
   };
 
   const handleClose = () => {
+    setTitle("");
+    setContent("");
     setClick(false);
   }
 
@@ -37,6 +42,7 @@ const AddNote = () => {
         type="text"
         placeholder={click ? "Title" : "Take a note..."}
         fullWidth
+        value={title}
         inputProps={{
           style: { height: "36px" },
         }}
@@ -50,6 +56,7 @@ const AddNote = () => {
               type="text"
               placeholder="Take a note..."
               fullWidth
+              value={content}
               multiline={true}
               inputProps={{
                 style: { height: "36px" },

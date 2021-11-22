@@ -34,3 +34,10 @@ export const listView = (flag) => {
     payload: flag,
   };
 };
+
+export const updateNote = (note) => {
+  return {
+    type: ActionTypes.UPDATE_NOTE,
+    payload: note,
+  };
+};
