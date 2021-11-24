@@ -69,11 +69,9 @@ const deletNote = (id) => {
   };
   return AxiosHelper.get(reqobj)
     .then((response) => {
-      console.log("response");
       return response;
     })
     .catch((err) => {
-      console.log("error occured");
       throw err;
     });
 };

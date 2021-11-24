@@ -5,28 +5,64 @@ import {
   CardContent,
   Typography,
   IconButton,
+  Snackbar,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
 } from "@mui/material";
 import React, { useState } from "react";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import RestoreFromTrashIcon from "@mui/icons-material/RestoreFromTrash";
 import "../styles/home.scss";
 import { useSelector } from "react-redux";
-import { styled } from "@mui/material/styles";
 import noteService from "../service/noteService";
 import { useDispatch } from "react-redux";
-import { removeTrashNote } from "../actions/noteActions";
+import {
+  removeTrashNote,
+  deleteNote,
+  addTrashNote,
+} from "../actions/noteActions";
+import CloseIcon from "@mui/icons-material/Close";
 
 const Trash = () => {
   const myNotes = useSelector((state) => state.allNotes.trash);
   const listView = useSelector((state) => state.allNotes.listView);
   const [hover, setHover] = useState([]);
   const dispatch = useDispatch();
-  const handleDelete = (id) => {
+  const [open, setOpen] = useState(false);
+  const [undoItem, setundoItem] = useState("");
+  const [deleteItem, setDeleteItem] = useState("");
+  const [dialougOpen, setDialougOpen] = useState(false);
+
+  const handleDilougOpen = (item) => {
+    setDeleteItem(item);
+    setDialougOpen(true);
+  };
+
+  const handleDialogClose = () => {
+    setDialougOpen(false);
+  };
+
+  const handleOpenSnackBar = (item) => {
+    setOpen(true);
+    setundoItem(item);
+  };
+  const handleCloseSnackBar = (reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpen(false);
+  };
+
+  const handleDelete = () => {
     noteService
-      .deletNote(id)
+      .deletNote(deleteItem._id)
       .then((res) => {
         if (res.data.status === 200) {
-          console.log(res);
+          dispatch(deleteNote(deleteItem));
+          handleDialogClose();
         } else {
           console.log(res);
         }
@@ -44,13 +80,51 @@ const Trash = () => {
       .then((res) => {
         if (res.data.status === 200) {
           dispatch(removeTrashNote(res.data.message));
-          console.log("success");
+          handleOpenSnackBar(res.data.message);
         } else {
-          console.log("error");
+          console.log(res);
+        }
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const handleUndoTrash = () => {
+    let data = {
+      ...undoItem,
+      isTrash: true,
+    };
+    noteService
+      .updateNotes(data, undoItem._id)
+      .then((res) => {
+        if (res.data.status === 200) {
+          dispatch(addTrashNote(res.data.message));
+          handleCloseSnackBar();
+        } else {
+          console.log(res);
         }
       })
       .catch((err) => console.log(err.message));
   };
+
+  const action = (
+    <React.Fragment>
+      <Button
+        size="small"
+        onClick={handleUndoTrash}
+        style={{ color: "yellow" }}
+      >
+        UNDO
+      </Button>
+      <IconButton
+        size="small"
+        aria-label="close"
+        color="inherit"
+        onClick={handleCloseSnackBar}
+      >
+        <CloseIcon fontSize="small" />
+      </IconButton>
+    </React.Fragment>
+  );
 
   return (
     <Box className="main-container">
@@ -82,7 +156,7 @@ const Trash = () => {
                   <div style={{ display: "flex", justifyContent: "start" }}>
                     <IconButton
                       size="small"
-                      onClick={() => handleDelete(item._id)}
+                      onClick={() => handleDilougOpen(item)}
                     >
                       <DeleteForeverIcon />
                     </IconButton>
@@ -101,6 +175,35 @@ const Trash = () => {
           );
         })}
       </Grid>
+      <Dialog open={dialougOpen} onClose={handleDialogClose}>
+        <DialogContent>
+          <DialogContentText style={{ width: "32vw" }}>
+            Delete note forever?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button
+            onClick={handleDialogClose}
+            style={{ color: "black", textTransform: "none" }}
+          >
+            Cancel
+          </Button>
+          <Button
+            onClick={handleDelete}
+            autoFocus
+            style={{ textTransform: "none" }}
+          >
+            Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
+      <Snackbar
+        open={open}
+        autoHideDuration={6000}
+        onClose={handleCloseSnackBar}
+        message="Note Restored"
+        action={action}
+      />
     </Box>
   );
 };

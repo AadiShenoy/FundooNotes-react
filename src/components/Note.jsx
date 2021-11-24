@@ -4,14 +4,19 @@ import {
   Card,
   CardContent,
   Typography,
-  CardActionArea,
+  IconButton,
+  Snackbar,
+  Button,
 } from "@mui/material";
 import React, { useState } from "react";
 import "../styles/home.scss";
 import { useSelector } from "react-redux";
-import { styled } from "@mui/material/styles";
 import Popup from "../components/Popup";
 import NoteFooter from "../components/NoteFooter";
+import CloseIcon from "@mui/icons-material/Close";
+import noteService from "../service/noteService";
+import { useDispatch } from "react-redux";
+import { removeTrashNote } from "../actions/noteActions";
 
 const Note = () => {
   const myNotes = useSelector((state) => state.allNotes.filteredNotes);
@@ -19,6 +24,54 @@ const Note = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [updateData, setUpdateData] = useState({});
   const [hover, setHover] = useState([]);
+  const [open, setOpen] = useState(false);
+  const dispatch = useDispatch();
+  const [undoItem, setundoItem] = useState("");
+  const handleOpenSnackBar = (item) => {
+    setOpen(true);
+    setundoItem(item);
+  };
+  const handleCloseSnackBar = (reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpen(false);
+  };
+
+  const handleRestore = () => {
+    let data = {
+      ...undoItem,
+      isTrash: false,
+    };
+    noteService
+      .updateNotes(data, undoItem._id)
+      .then((res) => {
+        if (res.data.status === 200) {
+          dispatch(removeTrashNote(res.data.message));
+          setundoItem("");
+          handleCloseSnackBar();
+        } else {
+          console.log(res);
+        }
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const action = (
+    <React.Fragment>
+      <Button size="small" onClick={handleRestore} style={{color:"yellow"}}>
+        UNDO
+      </Button>
+      <IconButton
+        size="small"
+        aria-label="close"
+        color="inherit"
+        onClick={handleCloseSnackBar}
+      >
+        <CloseIcon fontSize="small" />
+      </IconButton>
+    </React.Fragment>
+  );
 
   const handleUpdate = (item, index) => {
     let data = {
@@ -55,7 +108,11 @@ const Note = () => {
                   </Typography>
                 </CardContent>
                 {hover[index] ? (
-                  <NoteFooter item={item} index={index} />
+                  <NoteFooter
+                    item={item}
+                    index={index}
+                    handleOpenSnackBar={handleOpenSnackBar}
+                  />
                 ) : (
                   <div style={{ height: "35px" }}></div>
                 )}
@@ -65,6 +122,13 @@ const Note = () => {
         })}
       </Grid>
       {isOpen && <Popup handleClose={handleClose} item={updateData} />}
+      <Snackbar
+        open={open}
+        autoHideDuration={6000}
+        onClose={handleCloseSnackBar}
+        message="Note Trashed"
+        action={action}
+      />
     </Box>
   );
 };

@@ -42,6 +42,14 @@ export const updateNote = (note) => {
   };
 };
 
+export const deleteNote = (note) => {
+  return {
+    type: ActionTypes.DELETE_NOTE,
+    payload: note,
+  };
+};
+
+
 export const setTrashNotes = (note) => {
   return {
     type: ActionTypes.SET_TRASH_NOTES,
