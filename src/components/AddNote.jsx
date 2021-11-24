@@ -9,7 +9,7 @@ const AddNote = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const dispatch = useDispatch();
- 
+
   const handleAddNotes = () => {
     let data = {
       title: title,
@@ -22,7 +22,7 @@ const AddNote = () => {
       .setNotes(data)
       .then((res) => {
         if (res.data.status === 200) {
-          dispatch(addNewNote(res.data.message))
+          dispatch(addNewNote(res.data.message));
         } else {
           console.log(res);
         }
@@ -34,7 +34,7 @@ const AddNote = () => {
     setTitle("");
     setContent("");
     setClick(false);
-  }
+  };
 
   return (
     <Paper className="add-note-container" elevation={5}>

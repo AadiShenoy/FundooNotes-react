@@ -1,12 +1,11 @@
 import React from "react";
-import { IconButton, Snackbar, Button } from "@mui/material";
+import { IconButton, Tooltip } from "@mui/material";
 import ColorLensOutlinedIcon from "@mui/icons-material/ColorLensOutlined";
 import InsertPhotoOutlinedIcon from "@mui/icons-material/InsertPhotoOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import service from "../service/noteService";
 import { useDispatch } from "react-redux";
 import { addTrashNote } from "../actions/noteActions";
-
 
 const NoteFooter = ({ item, handleOpenSnackBar }) => {
   const dispatch = useDispatch();
@@ -31,15 +30,21 @@ const NoteFooter = ({ item, handleOpenSnackBar }) => {
   };
   return (
     <div style={{ display: "flex", justifyContent: "space-around" }}>
-      <IconButton size="small">
-        <ColorLensOutlinedIcon />
-      </IconButton>
-      <IconButton size="small">
-        <InsertPhotoOutlinedIcon />
-      </IconButton>
-      <IconButton size="small" onClick={handleTrash}>
-        <DeleteOutlineOutlinedIcon />
-      </IconButton>
+      <Tooltip title="Change Color">
+        <IconButton size="small">
+          <ColorLensOutlinedIcon />
+        </IconButton>
+      </Tooltip>
+      <Tooltip title="Add Image">
+        <IconButton size="small">
+          <InsertPhotoOutlinedIcon />
+        </IconButton>
+      </Tooltip>
+      <Tooltip title="Trash">
+        <IconButton size="small" onClick={handleTrash}>
+          <DeleteOutlineOutlinedIcon />
+        </IconButton>
+      </Tooltip>
     </div>
   );
 };

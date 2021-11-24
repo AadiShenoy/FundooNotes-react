@@ -7,6 +7,7 @@ import {
   IconButton,
   TextField,
   InputAdornment,
+  Tooltip,
 } from "@mui/material";
 import MuiAppBar from "@mui/material/AppBar";
 import SearchIcon from "@mui/icons-material/Search";
@@ -70,7 +71,9 @@ const Appbar = ({ handleDrawerOpen }) => {
             marginRight: "30px",
           }}
         >
-          <MenuIcon />
+          <Tooltip title="Main Menu">
+            <MenuIcon />
+          </Tooltip>
         </IconButton>
         <img src={keepImage} alt="" style={{ width: "2em", height: "2.5em" }} />
         <Typography
@@ -90,31 +93,45 @@ const Appbar = ({ handleDrawerOpen }) => {
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
-                <SearchIcon />
+                <Tooltip title="Search">
+                  <IconButton>
+                    <SearchIcon />
+                  </IconButton>
+                </Tooltip>
               </InputAdornment>
             ),
             style: { height: "44px" },
           }}
         />
-        <RefreshOutlinedIcon fontSize="medium" style={{ marginLeft: "15px" }} />
+        <Tooltip title="Refresh">
+          <RefreshOutlinedIcon
+            fontSize="medium"
+            style={{ marginLeft: "15px" }}
+          />
+        </Tooltip>
         {!list ? (
-          <SplitscreenOutlinedIcon
-            fontSize="medium"
-            onClick={handleView}
-            style={{ marginLeft: "15px" }}
-          />
+          <Tooltip title="List View">
+            <SplitscreenOutlinedIcon
+              fontSize="medium"
+              onClick={handleView}
+              style={{ marginLeft: "15px" }}
+            />
+          </Tooltip>
         ) : (
-          <GridViewIcon
+          <Tooltip title="Grid View">
+            <GridViewIcon
+              fontSize="medium"
+              onClick={handleView}
+              style={{ marginLeft: "15px" }}
+            />
+          </Tooltip>
+        )}
+        <Tooltip title="Settings">
+          <SettingsOutlinedIcon
             fontSize="medium"
-            onClick={handleView}
             style={{ marginLeft: "15px" }}
           />
-        )}
-
-        <SettingsOutlinedIcon
-          fontSize="medium"
-          style={{ marginLeft: "15px" }}
-        />
+        </Tooltip>
         <div className="appbar-div">
           <Typography
             variant="h6"
