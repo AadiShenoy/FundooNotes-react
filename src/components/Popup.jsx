@@ -17,7 +17,7 @@ const Popup = (props) => {
     };
     props.handleClose();
     service
-      .updateNote(data, props.item.item._id)
+      .updateNotes(data, props.item.item._id)
       .then((res) => {
         if (res.data.status === 200) {
           console.log(res);

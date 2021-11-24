@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from "react";
 import noteService from "../service/noteService";
 import { Box } from "@mui/material";
-import Note from "../components/Note";
 import Appbar from "../components/Appbar";
 import Sidebar from "../components/Sidebar";
 import { useDispatch } from "react-redux";
-import { setNotes } from "../actions/noteActions";
-import AddNote from "../components/AddNote";
+import { setTrashNotes } from "../actions/noteActions";
 import "../styles/home.scss";
+import Trash from "../components/Trash";
 
-const Dashboard = () => {
+const Bin = () => {
   const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
 
@@ -21,7 +20,8 @@ const Dashboard = () => {
     noteService
       .getNotes()
       .then((res) => {
-        dispatch(setNotes(res.data.message.filter(item => !item.isTrash)));
+        console.log(res);
+        dispatch(setTrashNotes(res.data.message.filter(item => item.isTrash)));
       })
       .catch((err) => {
         console.log(err);
@@ -39,11 +39,10 @@ const Dashboard = () => {
       <Appbar handleDrawerOpen={handleDrawerOpen} />
       <Sidebar open={open} />
       <Box component="main" className="note-container">
-        <AddNote />
-        <Note />
+        <Trash />
       </Box>
     </Box>
   );
 };
 
-export default Dashboard;
+export default Bin;

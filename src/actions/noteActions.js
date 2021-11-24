@@ -41,3 +41,25 @@ export const updateNote = (note) => {
     payload: note,
   };
 };
+
+export const setTrashNotes = (note) => {
+  return {
+    type: ActionTypes.SET_TRASH_NOTES,
+    payload: note,
+  };
+};
+
+export const removeTrashNote = (note) => {
+  return {
+    type: ActionTypes.REMOVE_TRASH_NOTE,
+    payload: note,
+  };
+};
+
+export const addTrashNote = (note) => {
+  return {
+    type: ActionTypes.ADD_TRASH_NOTE,
+    payload: note,
+  };
+};
+
