@@ -59,7 +59,7 @@ const Note = () => {
 
   const action = (
     <React.Fragment>
-      <Button size="small" onClick={handleRestore} style={{color:"yellow"}}>
+      <Button size="small" onClick={handleRestore} style={{ color: "yellow" }}>
         UNDO
       </Button>
       <IconButton
@@ -93,6 +93,7 @@ const Note = () => {
           return (
             <Grid item xs={12} md={listView ? 8 : 3} key={item._id}>
               <Card
+                style={{ background: item.color }}
                 elevation={hover[index] ? 6 : 1}
                 onMouseEnter={() => {
                   setHover({ [index]: true });

@@ -12,7 +12,6 @@ import ArchiveOutlinedIcon from "@mui/icons-material/ArchiveOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import { useDispatch } from "react-redux";
 import { setTitle } from "../actions/noteActions";
-import { Link } from "react-router-dom";
 
 const drawerWidth = 240;
 const openedMixin = (theme) => ({
@@ -85,7 +84,7 @@ const Sidebar = ({ open }) => {
     <Drawer variant="permanent" open={open}>
       <DrawerHeader />
       <List>
-        <ListItems button onClick={() => handleTitle("Notes")} component={Link} to="/Dashboard">
+        <ListItems button onClick={() => handleTitle("Notes")}>
           <ListItemIcon>
             <LightbulbOutlinedIcon />
           </ListItemIcon>
@@ -115,7 +114,7 @@ const Sidebar = ({ open }) => {
           </ListItemIcon>
           <ListItemText primary="Archive" />
         </ListItems>
-        <ListItems button onClick={() => handleTitle("Trash")} component={Link} to="/trash">
+        <ListItems button onClick={() => handleTitle("Trash")}>
           <ListItemIcon>
             <DeleteOutlineOutlinedIcon />
           </ListItemIcon>

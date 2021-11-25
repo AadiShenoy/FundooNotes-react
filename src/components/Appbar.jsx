@@ -50,7 +50,10 @@ const Appbar = ({ handleDrawerOpen }) => {
     dispatch(
       setFilteredNotes(
         myNotes.filter((item) => {
-          return item.title.toLowerCase().includes(search.toLowerCase());
+          return (
+            item.title.toLowerCase().includes(search.toLowerCase()) ||
+            item.content.toLowerCase().includes(search.toLowerCase())
+          );
         })
       )
     );
