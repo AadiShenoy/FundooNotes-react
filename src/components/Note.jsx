@@ -93,7 +93,7 @@ const Note = () => {
           return (
             <Grid item xs={12} md={listView ? 8 : 3} key={item._id}>
               <Card
-                style={{ background: item.color }}
+                style={{ background: item.color,borderRadius:"12px"}}
                 elevation={hover[index] ? 6 : 1}
                 onMouseEnter={() => {
                   setHover({ [index]: true });

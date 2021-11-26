@@ -37,14 +37,14 @@ const AddNote = () => {
   };
 
   return (
-    <Paper className="add-note-container" elevation={5}>
+    <Paper className="add-note-container" elevation={5} style={{borderRadius:"8px"}}>
       <InputBase
         type="text"
         placeholder={click ? "Title" : "Take a note..."}
         fullWidth
         value={title}
         inputProps={{
-          style: { height: "36px" },
+          style: { minHeight: "36px" },
         }}
         onFocus={() => setClick(true)}
         onChange={(e) => setTitle(e.target.value)}
@@ -59,7 +59,7 @@ const AddNote = () => {
               value={content}
               multiline={true}
               inputProps={{
-                style: { height: "36px" },
+                style: { minHeight: "36px" },
               }}
               onChange={(e) => setContent(e.target.value)}
             />

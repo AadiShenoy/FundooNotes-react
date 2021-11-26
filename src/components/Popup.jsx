@@ -38,7 +38,7 @@ const Popup = (props) => {
           onChange={(e) => setTitle(e.target.value)}
           inputProps={{
             style: {
-              height: "36px",
+              minHeight: "36px",
               width: "40vw",
               fontWeight: "bold",
               fontSize: "25px",
@@ -55,7 +55,7 @@ const Popup = (props) => {
           multiline={true}
           onChange={(e) => setContent(e.target.value)}
           inputProps={{
-            style: { height: "36px" },
+            style: { minHeight: "36px" },
           }}
         />
       </DialogContent>

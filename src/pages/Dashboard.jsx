@@ -10,11 +10,13 @@ import AddNote from "../components/AddNote";
 import "../styles/home.scss";
 import { useSelector } from "react-redux";
 import Trash from "../components/Trash";
+import { Redirect } from "react-router";
 
 const Dashboard = () => {
   const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
   const title = useSelector((state) => state.allNotes.title);
+  const token = localStorage.getItem("token");
   useEffect(() => {
     fetchitem();
   }, []);
@@ -60,15 +62,19 @@ const Dashboard = () => {
     }
   };
 
-  return (
-    <Box sx={{ display: "flex" }}>
-      <Appbar handleDrawerOpen={handleDrawerOpen} />
-      <Sidebar open={open} />
-      <Box component="main" className="note-container">
-        {renderOption()}
+  if (token == null) {
+    return <>{<Redirect to="/login" />}</>;
+  } else {
+    return (
+      <Box sx={{ display: "flex" }}>
+        <Appbar handleDrawerOpen={handleDrawerOpen} />
+        <Sidebar open={open} />
+        <Box component="main" className="note-container">
+          {renderOption()}
+        </Box>
       </Box>
-    </Box>
-  );
+    );
+  }
 };
 
 export default Dashboard;
