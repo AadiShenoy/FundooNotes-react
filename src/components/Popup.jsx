@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { Button, InputBase,Dialog,DialogActions,DialogContent,DialogTitle } from "@mui/material";
+import {
+  Button,
+  InputBase,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+} from "@mui/material";
 import "../styles/home.scss";
 import service from "../service/noteService";
 import { useDispatch } from "react-redux";
@@ -21,7 +28,9 @@ const Popup = (props) => {
       .then((res) => {
         if (res.data.status === 200) {
           console.log(res);
-          dispatch(updateNote({data:res.data.message,index:props.item.index}));
+          dispatch(
+            updateNote({ data: res.data.message, index: props.item.index })
+          );
         } else {
           console.log(res);
         }

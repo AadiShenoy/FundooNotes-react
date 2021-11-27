@@ -12,6 +12,7 @@ import {
   DialogContent,
   DialogContentText,
   Tooltip,
+  CardMedia,
 } from "@mui/material";
 import React, { useState } from "react";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
@@ -151,8 +152,21 @@ const Trash = () => {
                 }}
               >
                 <CardContent>
+                  {item.image !== "" ? (
+                    <CardMedia
+                      component="img"
+                      image={`http://localhost:3001/images/${item.image}`}
+                      alt="dish"
+                    />
+                  ) : null}
                   <Typography variant="h5">{item.title}</Typography>
-                  <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                  <Typography
+                    style={{
+                      overflow: "hidden",
+                      height: "3em",
+                    }}
+                    color="text.secondary"
+                  >
                     {item.content}
                   </Typography>
                 </CardContent>

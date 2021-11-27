@@ -7,6 +7,7 @@ import {
   IconButton,
   Snackbar,
   Button,
+  CardMedia,
 } from "@mui/material";
 import React, { useState } from "react";
 import "../styles/home.scss";
@@ -93,7 +94,7 @@ const Note = () => {
           return (
             <Grid item xs={12} md={listView ? 8 : 3} key={item._id}>
               <Card
-                style={{ background: item.color,borderRadius:"12px"}}
+                style={{ background: item.color, borderRadius: "12px" }}
                 elevation={hover[index] ? 6 : 1}
                 onMouseEnter={() => {
                   setHover({ [index]: true });
@@ -103,8 +104,25 @@ const Note = () => {
                 }}
               >
                 <CardContent onClick={() => handleUpdate(item, index)}>
-                  <Typography variant="h5">{item.title}</Typography>
-                  <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                  {item.image !== "" ? (
+                    <CardMedia
+                      component="img"
+                      image={`http://localhost:3001/images/${item.image}`}
+                      alt="dish"
+                      style={{ height: "150px" }}
+                    />
+                  ) : null}
+
+                  <Typography variant="h6" style={{ fontWeight: "bold" }}>
+                    {item.title}
+                  </Typography>
+                  <Typography
+                    style={{
+                      overflow: "hidden",
+                      height: "3em",
+                    }}
+                    color="text.secondary"
+                  >
                     {item.content}
                   </Typography>
                 </CardContent>
@@ -115,7 +133,7 @@ const Note = () => {
                     handleOpenSnackBar={handleOpenSnackBar}
                   />
                 ) : (
-                  <div style={{ height: "35px" }}></div>
+                  <div style={{ height: "40px" }}></div>
                 )}
               </Card>
             </Grid>
