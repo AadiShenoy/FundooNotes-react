@@ -17,6 +17,7 @@ import {
   Paper,
   FormControlLabel,
   Checkbox,
+  Alert
 } from "@mui/material";
 import "../styles/form.scss";
 
@@ -36,6 +37,7 @@ const Registeration = () => {
   const [confirmPasswordError, setPasswordConfirmError] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [success,setSuccess] = useState(false)
+  const [fail,setFail] = useState(false)
 
   const handleShowPassword = () => {
     setShowPassword(!showPassword);
@@ -92,11 +94,13 @@ const Registeration = () => {
             console.log("Registered successfully");
             console.log(response.data);
           }else{
+            setFail(true)
             console.log("Registeration failed");
             console.log(response.data);
           }
         })
         .catch((e) => {
+          setFail(true)
           console.log("Registeration failed");
           console.log(e);
         });
@@ -207,7 +211,7 @@ const Registeration = () => {
               </Button>
             </Grid>
             <Grid item xs={6}>
-              <Button variant="contained" type="submit">
+              <Button variant="contained" type="submit" id="submit">
                 Submit
               </Button>
             </Grid>
@@ -216,6 +220,7 @@ const Registeration = () => {
             <img alt=" " src={registerImage} />
           </Grid>
         </Grid>
+        {fail && <Alert severity="error" onClose={() => {setFail(false)}}>Registeration Failed!!</Alert>}
       </Paper>
       {success?<Redirect to="/login"/>:null}
     </form>

@@ -9,8 +9,10 @@ import {
   Paper,
   Checkbox,
   FormControlLabel,
+  Alert
 } from "@mui/material";
 import "../styles/form.scss";
+
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -18,7 +20,7 @@ const Login = () => {
   const [passwordError, setPasswordError] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [success,setSuccess] = useState(false)
-
+  const [fail,setFail] = useState(false);
   const handleSubmit = (e) => {
     let errorFlag = false;
     e.preventDefault();
@@ -44,15 +46,18 @@ const Login = () => {
         .login(data)
         .then((response) => {
           if(response.data.status === 200){
+            localStorage.setItem("Account",data.email)
             localStorage.setItem('token',response.data.message.token)
             console.log("Login successfully");
             setSuccess(true)
           }else{
+            setFail(true)
             console.log("Login failed");
             console.log(response.data);
           }
         })
         .catch((e) => {
+          setFail(true)
           console.log(e);
         });
     }
@@ -123,9 +128,11 @@ const Login = () => {
             </Button>
           </Grid>
         </Grid>
+        {fail && <Alert severity="error" onClose={() => {setFail(false)}}>Login Failed!!</Alert>}
       </Paper>
       {success?<Redirect to="/dashboard"/>:null}
     </form>
+    
   );
 };
 

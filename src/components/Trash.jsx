@@ -157,6 +157,7 @@ const Trash = () => {
                       component="img"
                       image={`http://localhost:3001/images/${item.image}`}
                       alt="dish"
+                      style={{ minHeight: "150px", maxHeight:"250px"}}
                     />
                   ) : null}
                   <Typography variant="h5">{item.title}</Typography>

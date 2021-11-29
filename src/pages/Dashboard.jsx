@@ -19,6 +19,7 @@ const Dashboard = () => {
   const token = localStorage.getItem("token");
   useEffect(() => {
     fetchitem();
+     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fetchitem = () => {

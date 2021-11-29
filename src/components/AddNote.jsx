@@ -37,8 +37,13 @@ const AddNote = () => {
   };
 
   return (
-    <Paper className="add-note-container" elevation={5} style={{borderRadius:"8px"}}>
+    <Paper
+      className="add-note-container"
+      elevation={5}
+      style={{ borderRadius: "8px" }}
+    >
       <InputBase
+        id="note-title"
         type="text"
         placeholder={click ? "Title" : "Take a note..."}
         fullWidth
@@ -54,6 +59,7 @@ const AddNote = () => {
           <Grid item xs={12}>
             <InputBase
               type="text"
+              id="note-content"
               placeholder="Take a note..."
               fullWidth
               value={content}
@@ -66,6 +72,7 @@ const AddNote = () => {
           </Grid>
           <Grid item xs={12} align="right">
             <Button
+              id="note-submit"
               style={{ color: "black", textTransform: "none" }}
               onClick={handleAddNotes}
             >

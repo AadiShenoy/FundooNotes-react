@@ -10,11 +10,11 @@ import {
   Tooltip,
   Button,
   Popover,
+  Avatar,
 } from "@mui/material";
 import MuiAppBar from "@mui/material/AppBar";
 import SearchIcon from "@mui/icons-material/Search";
 import MenuIcon from "@mui/icons-material/Menu";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import RefreshOutlinedIcon from "@mui/icons-material/RefreshOutlined";
 import SplitscreenOutlinedIcon from "@mui/icons-material/SplitscreenOutlined";
@@ -60,6 +60,7 @@ const Appbar = ({ handleDrawerOpen }) => {
         })
       )
     );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [search, myNotes]);
 
   const handleView = () => {
@@ -75,7 +76,7 @@ const Appbar = ({ handleDrawerOpen }) => {
   const handlePopClose = () => {
     setAnchorEl(null);
   };
-
+  const account = localStorage.getItem("Account");
   const open = Boolean(anchorEl);
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -154,9 +155,16 @@ const Appbar = ({ handleDrawerOpen }) => {
           />
         </Tooltip>
         <div className="appbar-div">
-          <Tooltip title="Account">
+          <Tooltip
+            title={
+              <span>
+                <b>Fundoo Account</b>
+                <p>{account}</p>
+              </span>
+            }
+          >
             <IconButton onClick={handlePopClick}>
-              <AccountCircleIcon fontSize="large" />
+              <Avatar>{account[0].toLocaleUpperCase()}</Avatar>
             </IconButton>
           </Tooltip>
           <Popover
@@ -168,7 +176,16 @@ const Appbar = ({ handleDrawerOpen }) => {
               horizontal: "left",
             }}
           >
-            <Button onClick={handleLogout}>Logout</Button>
+            <Button
+              onClick={handleLogout}
+              style={{
+                color: "black",
+                textTransform: "none",
+                fontWeight: "bold",
+              }}
+            >
+              Logout
+            </Button>
           </Popover>
         </div>
       </Toolbar>

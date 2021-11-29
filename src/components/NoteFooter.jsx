@@ -128,6 +128,7 @@ const NoteFooter = ({ item, handleOpenSnackBar, index }) => {
   };
 
   const open = Boolean(anchorEl);
+
   const fileHandler = (event) => {
     const fd = new FormData();
     fd.append("image", event.target.files[0], event.target.files[0].name);
@@ -142,7 +143,7 @@ const NoteFooter = ({ item, handleOpenSnackBar, index }) => {
   return (
     <div style={{ display: "flex", justifyContent: "space-around" }}>
       <Tooltip title="Change Color">
-        <IconButton size="small" onClick={handlePopClick}>
+        <IconButton size="small" onClick={handlePopClick} id="color-btn">
           <ColorLensOutlinedIcon />
         </IconButton>
       </Tooltip>
@@ -180,11 +181,11 @@ const NoteFooter = ({ item, handleOpenSnackBar, index }) => {
       >
         <Paper>
           <Grid container sx={{ p: 1 }}>
-            {colours.map(({ colorCode, colorName }) => {
+            {colours.map(({ colorCode, colorName },index) => {
               return (
                 <Grid item xs={3} key={index} style={{ width: "10px" }}>
                   <Tooltip title={colorName}>
-                    <IconButton onClick={() => handleColor(colorCode)}>
+                    <IconButton onClick={() => handleColor(colorCode)} id={index}>
                       <CircleIcon style={{ color: colorCode }} />
                     </IconButton>
                   </Tooltip>
