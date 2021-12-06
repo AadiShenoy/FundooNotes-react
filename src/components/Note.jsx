@@ -22,6 +22,7 @@ import { removeTrashNote } from "../actions/noteActions";
 const Note = () => {
   const myNotes = useSelector((state) => state.allNotes.filteredNotes);
   const listView = useSelector((state) => state.allNotes.listView);
+
   const [isOpen, setIsOpen] = useState(false);
   const [updateData, setUpdateData] = useState({});
   const [hover, setHover] = useState([]);
@@ -92,7 +93,7 @@ const Note = () => {
       <Grid container spacing={4} justifyContent={listView ? "center" : null}>
         {myNotes.map((item, index) => {
           return (
-            <Grid item xs={12} md={listView ? 8 : 3} key={item._id}>
+            <Grid item xs={12} sm={6} md={listView ? 8 : 3} key={item._id}>
               <Card
                 style={{ background: item.color, borderRadius: "12px" }}
                 elevation={hover[index] ? 6 : 1}
@@ -109,18 +110,20 @@ const Note = () => {
                       component="img"
                       image={`http://localhost:3001/images/${item.image}`}
                       alt="dish"
-                      style={{ minHeight: "150px", maxHeight:"250px"}}
+                      style={{ minHeight: "150px", maxHeight: "250px" }}
                     />
                   ) : null}
 
-                  <Typography variant="h6" style={{ fontWeight: "bold" }}>
+                  <Typography
+                    variant="h6"
+                    style={{ fontWeight: "bold" }}
+                    align="left"
+                  >
                     {item.title}
                   </Typography>
                   <Typography
-                    style={{
-                      overflow: "hidden",
-                      height: item.image !==""?"3em":"12.5em",
-                    }}
+                    align="left"
+                    className="item-content"
                     color="text.secondary"
                   >
                     {item.content}

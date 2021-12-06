@@ -9,6 +9,7 @@ import {
   Paper,
   FormControlLabel,
   Checkbox,
+  Alert,
 } from "@mui/material";
 import "../styles/form.scss";
 const ResetPassWord = () => {
@@ -16,6 +17,8 @@ const ResetPassWord = () => {
   const [passwordError, setPasswordError] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const { token } = useParams();
+  const [success, setSuccess] = useState(false);
+  const [fail, setFail] = useState(false);
 
   const handleShowPassword = () => {
     setShowPassword(!showPassword);
@@ -40,12 +43,14 @@ const ResetPassWord = () => {
         .then((result) => {
           if (result.data.status === 200) {
             console.log(result.data);
-            alert("password changed");
+            setSuccess(true);
           } else {
+            setFail(true);
             console.log(result.data);
           }
         })
         .catch((e) => {
+          setFail(true);
           console.log(e);
         });
     }
@@ -96,6 +101,28 @@ const ResetPassWord = () => {
               Submit
             </Button>
           </Grid>
+        </Grid>
+        <Grid item xs={12} style={{ paddingTop: "15px" }}>
+          {success && (
+            <Alert
+              severity="success"
+              onClose={() => {
+                setSuccess(false);
+              }}
+            >
+              Password Changed successfully
+            </Alert>
+          )}
+          {fail && (
+            <Alert
+              severity="error"
+              onClose={() => {
+                setFail(false);
+              }}
+            >
+              Failed to reset the password!!
+            </Alert>
+          )}
         </Grid>
       </Paper>
     </form>

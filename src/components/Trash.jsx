@@ -25,6 +25,7 @@ import {
   removeTrashNote,
   deleteNote,
   addTrashNote,
+  emptyTrash,
 } from "../actions/noteActions";
 import CloseIcon from "@mui/icons-material/Close";
 
@@ -130,17 +131,35 @@ const Trash = () => {
     </React.Fragment>
   );
 
+  const handleDeleteTrash = () => {
+    myNotes.map((item) => {
+      return noteService
+        .deletNote(item._id)
+        .then((data) => {
+          console.log(data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    });
+    dispatch(emptyTrash());
+  };
+
   return (
     <Box className="main-container">
       <Typography
         style={{ fontStyle: "italic", marginBottom: "20px", fontSize: "17px" }}
       >
         Notes in Trash are deleted after 7 days.
+        <Button onClick={handleDeleteTrash}
+        style={{textTransform:'none'}}
+        >Empty Trash</Button>
       </Typography>
+
       <Grid container spacing={4} justifyContent={listView ? "center" : null}>
         {myNotes.map((item, index) => {
           return (
-            <Grid item xs={12} md={listView ? 8 : 3} key={item._id}>
+            <Grid item xs={12} sm={6} md={listView ? 8 : 3} key={item._id}>
               <Card
                 style={{ background: item.color }}
                 elevation={hover[index] ? 6 : 1}
@@ -157,17 +176,11 @@ const Trash = () => {
                       component="img"
                       image={`http://localhost:3001/images/${item.image}`}
                       alt="dish"
-                      style={{ minHeight: "150px", maxHeight:"250px"}}
+                      style={{ minHeight: "150px", maxHeight: "250px" }}
                     />
                   ) : null}
                   <Typography variant="h5">{item.title}</Typography>
-                  <Typography
-                    style={{
-                      overflow: "hidden",
-                      height: "3em",
-                    }}
-                    color="text.secondary"
-                  >
+                  <Typography className="item-content" color="text.secondary">
                     {item.content}
                   </Typography>
                 </CardContent>

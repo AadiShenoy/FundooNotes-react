@@ -40,7 +40,7 @@ const AddNote = () => {
     <Paper
       className="add-note-container"
       elevation={5}
-      style={{ borderRadius: "8px" }}
+      style={{ borderRadius: "8px"}}
     >
       <InputBase
         id="note-title"

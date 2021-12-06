@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import registerImage from "../assets/account.svg";
-import { Link,Redirect } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import userService from "../service/userService";
 
 import {
@@ -17,7 +17,7 @@ import {
   Paper,
   FormControlLabel,
   Checkbox,
-  Alert
+  Alert,
 } from "@mui/material";
 import "../styles/form.scss";
 
@@ -36,8 +36,8 @@ const Registeration = () => {
   const [passwordError, setPasswordError] = useState(false);
   const [confirmPasswordError, setPasswordConfirmError] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const [success,setSuccess] = useState(false)
-  const [fail,setFail] = useState(false)
+  const [success, setSuccess] = useState(false);
+  const [fail, setFail] = useState(false);
 
   const handleShowPassword = () => {
     setShowPassword(!showPassword);
@@ -89,18 +89,18 @@ const Registeration = () => {
       userService
         .register(data)
         .then((response) => {
-          if(response.data.status === 200){
-            setSuccess(true)
+          if (response.data.status === 200) {
+            setSuccess(true);
             console.log("Registered successfully");
             console.log(response.data);
-          }else{
-            setFail(true)
+          } else {
+            setFail(true);
             console.log("Registeration failed");
             console.log(response.data);
           }
         })
         .catch((e) => {
-          setFail(true)
+          setFail(true);
           console.log("Registeration failed");
           console.log(e);
         });
@@ -115,7 +115,7 @@ const Registeration = () => {
           <Grid item container spacing={1} xs={8}>
             <Grid item xs={12}>
               <Typography variant="h5" align="left">
-              <span className="multicolortext">Fundoo Note</span>
+                <span className="multicolortext">Fundoo Note</span>
               </Typography>
             </Grid>
             <Grid item xs={12}>
@@ -220,9 +220,20 @@ const Registeration = () => {
             <img alt=" " src={registerImage} />
           </Grid>
         </Grid>
-        {fail && <Alert severity="error" onClose={() => {setFail(false)}}>Registeration Failed!!</Alert>}
+        <Grid item xs={12} style={{ paddingTop: "15px" }}>
+          {fail && (
+            <Alert
+              severity="error"
+              onClose={() => {
+                setFail(false);
+              }}
+            >
+              Registeration Failed!!
+            </Alert>
+          )}
+        </Grid>
       </Paper>
-      {success?<Redirect to="/login"/>:null}
+      {success ? <Redirect to="/login" /> : null}
     </form>
   );
 };

@@ -48,7 +48,7 @@ const Dashboard = () => {
         return (
           <>
             <AddNote />
-            <Note />
+            <Note/>
           </>
         );
       case "Trash":

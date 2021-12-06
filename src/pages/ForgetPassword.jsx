@@ -1,11 +1,20 @@
 import React, { useState } from "react";
 import userService from "../service/userService";
 import { Link } from "react-router-dom";
-import { Grid, TextField, Typography, Button, Paper } from "@mui/material";
+import {
+  Grid,
+  TextField,
+  Typography,
+  Button,
+  Paper,
+  Alert,
+} from "@mui/material";
 import "../styles/form.scss";
 const ForgetPassWord = () => {
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState(false);
+  const [fail, setFail] = useState(false);
+  const [success, setSuccess] = useState(false);
 
   const handleSubmit = (e) => {
     let errorFlag = false;
@@ -25,14 +34,14 @@ const ForgetPassWord = () => {
         .forgetPassword(data)
         .then((result) => {
           if (result.data.status === 200) {
-            console.log("Email sent successfully");
-            alert("Email has been sent to reset the password");
+            setSuccess(true);
           } else {
-            alert("Invalid email");
-            console.log(result.data)
+            setFail(true);
+            console.log(result.data);
           }
         })
         .catch((e) => {
+          setFail(true);
           console.log(e);
         });
     }
@@ -74,6 +83,28 @@ const ForgetPassWord = () => {
               Submit
             </Button>
           </Grid>
+        </Grid>
+        <Grid item xs={12} style={{paddingTop:"15px"}}>
+          {success && (
+            <Alert
+              severity="success"
+              onClose={() => {
+                setSuccess(false);
+              }}
+            >
+              Password reset link sent to your email
+            </Alert>
+          )}
+          {fail && (
+            <Alert
+              severity="error"
+              onClose={() => {
+                setFail(false);
+              }}
+            >
+              Invalid Email!!
+            </Alert>
+          )}
         </Grid>
       </Paper>
     </form>

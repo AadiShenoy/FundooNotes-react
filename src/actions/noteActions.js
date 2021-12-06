@@ -28,10 +28,9 @@ export const addNewNote = (note) => {
   };
 };
 
-export const listView = (flag) => {
+export const listView = () => {
   return {
     type: ActionTypes.LIST_VIEW,
-    payload: flag,
   };
 };
 
@@ -68,6 +67,12 @@ export const addTrashNote = (note) => {
   return {
     type: ActionTypes.ADD_TRASH_NOTE,
     payload: note,
+  };
+};
+
+export const emptyTrash = () => {
+  return {
+    type: ActionTypes.EMPTY_TRASH,
   };
 };
 

@@ -5,14 +5,15 @@
 
 .appbar-div {
   display: flex;
-  padding: 4px;
-  margin: auto;
+  margin-right: 8%;
+  width:200px;
+  justify-content: space-evenly;
 }
 
 .note-container {
   flex-grow: 1;
   padding: 3;
-  margin: 5% auto;
+  margin-top: 70px;
 }
 
 .add-note-container {
@@ -21,5 +22,10 @@
   padding: 0 2% 0 2%;
   border-radius: 8px;
 }
-
- 
+.item-content {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* number of lines to show */
+  -webkit-box-orient: vertical;
+}

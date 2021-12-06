@@ -3,7 +3,7 @@ const url = require("../config/local");
 
 const getNotes = () => {
   const token = localStorage.getItem("token");
-  console.log("In service",token);
+  console.log("In service", token);
   let reqobj = {
     method: "get",
     url: url.baseURL + "/notes",
@@ -81,7 +81,7 @@ const setImage = (data) => {
   const token = localStorage.getItem("token");
   let reqobj = {
     method: "post",
-    url: url.baseURL + "/upload-image",
+    url: url.baseURL + "/notes/upload-image",
     headers: {
       Authorization: `bearer ${token}`,
     },
@@ -96,4 +96,4 @@ const setImage = (data) => {
     });
 };
 /* eslint import/no-anonymous-default-export: [2, {"allowObject": true}] */
-export default { getNotes, setNotes, updateNotes, deletNote,setImage };
+export default { getNotes, setNotes, updateNotes, deletNote, setImage };

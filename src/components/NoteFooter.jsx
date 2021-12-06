@@ -128,7 +128,6 @@ const NoteFooter = ({ item, handleOpenSnackBar, index }) => {
   };
 
   const open = Boolean(anchorEl);
-
   const fileHandler = (event) => {
     const fd = new FormData();
     fd.append("image", event.target.files[0], event.target.files[0].name);

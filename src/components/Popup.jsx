@@ -6,6 +6,7 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
+  CardMedia,
 } from "@mui/material";
 import "../styles/home.scss";
 import service from "../service/noteService";
@@ -39,49 +40,63 @@ const Popup = (props) => {
   };
   return (
     <Dialog open={true} onClose={props.handleClose}>
-      <DialogTitle>
-        <InputBase
-          type="text"
-          placeholder="Title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          inputProps={{
-            style: {
-              minHeight: "36px",
-              width: "40vw",
-              fontWeight: "bold",
-              fontSize: "25px",
-            },
-          }}
-        />
-      </DialogTitle>
-      <DialogContent>
-        <InputBase
-          type="text"
-          placeholder="Take a note..."
-          fullWidth
-          value={content}
-          multiline={true}
-          onChange={(e) => setContent(e.target.value)}
-          inputProps={{
-            style: { minHeight: "36px" },
-          }}
-        />
-      </DialogContent>
-      <DialogActions>
-        <Button
-          style={{ color: "black", textTransform: "none" }}
-          onClick={handleUpdateNotes}
-        >
-          Submit
-        </Button>
-        <Button
-          style={{ color: "black", textTransform: "none" }}
-          onClick={props.handleClose}
-        >
-          Close
-        </Button>
-      </DialogActions>
+      <div style={{ backgroundColor: props.item.item.color }}>
+        <DialogTitle>
+          <CardMedia
+            component="img"
+            image={`http://localhost:3001/images/${props.item.item.image}`}
+            alt="dish"
+            style={{
+              minHeight: "150px",
+              maxHeight: "200px",
+              borderRadius: "6px",
+            }}
+          />
+        </DialogTitle>
+        <DialogTitle>
+          <InputBase
+            type="text"
+            placeholder="Title"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            inputProps={{
+              style: {
+                minHeight: "36px",
+                width: "40vw",
+                fontWeight: "bold",
+                fontSize: "25px",
+              },
+            }}
+          />
+        </DialogTitle>
+        <DialogContent>
+          <InputBase
+            type="text"
+            placeholder="Take a note..."
+            fullWidth
+            value={content}
+            multiline={true}
+            onChange={(e) => setContent(e.target.value)}
+            inputProps={{
+              style: { minHeight: "36px" },
+            }}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button
+            style={{ color: "black", textTransform: "none" }}
+            onClick={handleUpdateNotes}
+          >
+            Submit
+          </Button>
+          <Button
+            style={{ color: "black", textTransform: "none" }}
+            onClick={props.handleClose}
+          >
+            Close
+          </Button>
+        </DialogActions>
+      </div>
     </Dialog>
   );
 };

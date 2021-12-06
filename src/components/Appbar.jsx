@@ -122,72 +122,70 @@ const Appbar = ({ handleDrawerOpen }) => {
                 </Tooltip>
               </InputAdornment>
             ),
-            style: { height: "44px" },
+            style: { height: "40px" },
           }}
         />
-        <Tooltip title="Refresh">
-          <RefreshOutlinedIcon
-            fontSize="medium"
-            style={{ marginLeft: "15px" }}
-          />
-        </Tooltip>
-        {!list ? (
-          <Tooltip title="List View">
-            <SplitscreenOutlinedIcon
-              fontSize="medium"
-              onClick={handleView}
-              style={{ marginLeft: "15px" }}
-            />
-          </Tooltip>
-        ) : (
-          <Tooltip title="Grid View">
-            <GridViewIcon
-              fontSize="medium"
-              onClick={handleView}
-              style={{ marginLeft: "15px" }}
-            />
-          </Tooltip>
-        )}
-        <Tooltip title="Settings">
-          <SettingsOutlinedIcon
-            fontSize="medium"
-            style={{ marginLeft: "15px" }}
-          />
-        </Tooltip>
+
         <div className="appbar-div">
-          <Tooltip
-            title={
-              <span>
-                <b>Fundoo Account</b>
-                <p>{account}</p>
-              </span>
-            }
-          >
-            <IconButton onClick={handlePopClick}>
-              <Avatar>{account[0].toLocaleUpperCase()}</Avatar>
-            </IconButton>
+          <Tooltip title="Refresh">
+            <RefreshOutlinedIcon
+              fontSize="medium"
+              onClick={() => window.location.reload()}
+            />
           </Tooltip>
-          <Popover
-            open={open}
-            anchorEl={anchorEl}
-            onClose={handlePopClose}
-            anchorOrigin={{
-              vertical: "bottom",
-              horizontal: "left",
+          {!list ? (
+            <Tooltip title="List View">
+              <SplitscreenOutlinedIcon
+                fontSize="medium"
+                onClick={handleView}
+              />
+            </Tooltip>
+          ) : (
+            <Tooltip title="Grid View">
+              <GridViewIcon
+                fontSize="medium"
+                onClick={handleView}
+              />
+            </Tooltip>
+          )}
+          <Tooltip title="Settings">
+            <SettingsOutlinedIcon
+              fontSize="medium"
+            />
+          </Tooltip>
+        </div>
+        <Tooltip
+          title={
+            <span>
+              <b>Fundoo Account</b>
+              <p>{account}</p>
+            </span>
+          }
+        >
+          <IconButton onClick={handlePopClick}>
+            <Avatar>{account[0].toLocaleUpperCase()}</Avatar>
+          </IconButton>
+        </Tooltip>
+        <Popover
+          open={open}
+          anchorEl={anchorEl}
+          onClose={handlePopClose}
+          anchorOrigin={{
+            vertical: "bottom",
+            horizontal: "left",
+          }}
+        >
+          <Button
+            onClick={handleLogout}
+            style={{
+              color: "black",
+              textTransform: "none",
+              fontWeight: "bold",
             }}
           >
-            <Button
-              onClick={handleLogout}
-              style={{
-                color: "black",
-                textTransform: "none",
-                fontWeight: "bold",
-              }}
-            >
-              Logout
-            </Button>
-          </Popover>
-        </div>
+            Logout
+          </Button>
+        </Popover>
       </Toolbar>
       {logout ? <Redirect to="/login" /> : null}
     </AppBar>
