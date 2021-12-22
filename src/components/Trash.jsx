@@ -136,7 +136,6 @@ const Trash = () => {
       return noteService
         .deletNote(item._id)
         .then((data) => {
-          console.log(data);
         })
         .catch((err) => {
           console.log(err);

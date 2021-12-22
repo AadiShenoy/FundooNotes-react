@@ -72,7 +72,6 @@ const NoteFooter = ({ item, handleOpenSnackBar, index }) => {
         if (res.data.status === 200) {
           dispatch(addTrashNote(res.data.message));
           handleOpenSnackBar(res.data.message);
-          console.log(res);
         } else {
           console.log(res);
         }
@@ -135,7 +134,6 @@ const NoteFooter = ({ item, handleOpenSnackBar, index }) => {
       .setImage(fd)
       .then((res) => {
         handleImage(res.data.filename);
-        console.log(res);
       })
       .catch((err) => console.log(err.message));
   };

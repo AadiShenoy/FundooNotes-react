@@ -3,7 +3,6 @@ const url = require("../config/local");
 
 const getNotes = () => {
   const token = localStorage.getItem("token");
-  console.log("In service", token);
   let reqobj = {
     method: "get",
     url: url.baseURL + "/notes",
