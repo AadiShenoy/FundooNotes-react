@@ -174,7 +174,7 @@ const Trash = () => {
                   {item.image !== "" ? (
                     <CardMedia
                       component="img"
-                      image={`http://localhost:3001/images/${item.image}`}
+                      image={`https://fundoo-note-app-nodejs.herokuapp.com/images/${item.image}`}
                       alt="dish"
                       style={{ minHeight: "150px", maxHeight: "250px" }}
                     />
