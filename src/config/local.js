@@ -1,1 +1,2 @@
-export const baseURL = "http://localhost:3001"
+require('dotenv').config();
+export const baseURL = "https://fundoo-note-app-nodejs.herokuapp.com"
