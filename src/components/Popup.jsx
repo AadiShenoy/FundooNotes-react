@@ -44,7 +44,7 @@ const Popup = (props) => {
         <DialogTitle>
           <CardMedia
             component="img"
-            image={`http://localhost:3001/images/${props.item.item.image}`}
+            image={`https://fundoo-note-app-nodejs.herokuapp.com/images/${props.item.item.image}`}
             alt="dish"
             style={{
               minHeight: "150px",
